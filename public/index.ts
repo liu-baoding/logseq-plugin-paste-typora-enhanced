@@ -20,6 +20,13 @@ const settings: SettingSchemaDesc[] = [
     description: ''
   },
   {
+    key: "removeHR",
+    title: 'Whether to remove horizontal rules',
+    type: "boolean",
+    default: false,
+    description: ''
+  },
+  {
     key: "enablePasteMore",
     title: 'Enable paste more',
     type: "boolean",
@@ -71,6 +78,38 @@ async function main() {
     }
   });
 
+  turndownService.addRule('inline-math', {
+    filter: (node) => {
+      return (
+        node.nodeName === 'SPAN' &&
+        (node.classList.contains('md-inline-math') || node.getAttribute('md-inline') === 'inline_math')
+      );
+    },
+    replacement: (content) => {
+      return `$${content.trim()}$`;
+    }
+  });
+
+  turndownService.addRule('display-math', {
+    filter: (node) => {
+      return (
+        (node.nodeName === 'DIV' || node.nodeName === 'SPAN') &&
+        (node.classList.contains('md-display-math') || 
+         node.classList.contains('md-math-block') ||
+         node.getAttribute('md-inline') === 'display_math' ||
+         node.getAttribute('mdtype') === 'math_block')
+      );
+    },
+    replacement: (content) => {
+      // If content already contains $$, just clean it up
+      let cleanContent = content.trim();
+      if (cleanContent.startsWith('$$') && cleanContent.endsWith('$$')) {
+        return `\n${cleanContent}\n`;
+      }
+      return `\n$$\n${cleanContent}\n$$\n`;
+    }
+  });
+
   gfm(turndownService)
 
   turndownService.remove('style')
@@ -106,6 +145,15 @@ async function main() {
       }
       // @ts-ignore
       let markdown: string = turndownService.turndown(html)
+
+      if (logseq.settings?.removeHR) {
+        markdown = markdown.replace(/^---$/gm, '')
+      }
+
+      console.log("--- Paste More Debug Start ---")
+      console.log("Raw HTML content:", html)
+      console.log("Converted Markdown:", markdown)
+      console.log("--- Paste More Debug End ---")
       // console.log("html source\n", html)
       // console.log("markdown result\n"+markdown)
 

@@ -38,6 +38,20 @@ export function splitBlock(blockContent: string, indentHeaders: boolean) {
       }
       lines.push(tableLines.join("\n"));
       
+    } else if (line.trim().startsWith("$$")) {
+      let mathLines: string[] = [line];
+      i++;
+
+      while (i < linesSource.length && !linesSource[i].trim().endsWith("$$")) {
+        mathLines.push(linesSource[i]);
+        i++;
+      }
+
+      if (i < linesSource.length) {
+        mathLines.push(linesSource[i]);
+        lines.push(mathLines.join("\n"));
+        i++;
+      }
     } else {
       lines.push(line);
       i++;
