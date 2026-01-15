@@ -1,9 +1,9 @@
 {
-  "name": "logseq-plugin-paste-more",
+  "name": "logseq-plugin-paste-typora-enhanced",
   "version": "1.5.9",
   "main": "dist/index.html",
   "logseq": {
-    "id": "_usoon-logseq-paste-more",
+    "id": "logseq-plugin-paste-typora-enhanced",
     "icon": "./icon.png"
   },
   "scripts": {

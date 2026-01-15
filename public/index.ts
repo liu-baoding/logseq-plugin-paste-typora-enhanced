@@ -28,7 +28,7 @@ const settings: SettingSchemaDesc[] = [
   },
   {
     key: "enablePasteMore",
-    title: 'Enable paste more',
+    title: 'Enable paste typora enhanced',
     type: "boolean",
     default: true,
     description: ''}
@@ -150,12 +150,10 @@ async function main() {
         markdown = markdown.replace(/^---$/gm, '')
       }
 
-      console.log("--- Paste More Debug Start ---")
-      console.log("Raw HTML content:", html)
-      console.log("Converted Markdown:", markdown)
-      console.log("--- Paste More Debug End ---")
-      // console.log("html source\n", html)
-      // console.log("markdown result\n"+markdown)
+    //   console.log("--- Paste More Debug Start ---")
+    //   console.log("Raw HTML content:", html)
+    //   console.log("Converted Markdown:", markdown)
+    //   console.log("--- Paste More Debug End ---")
 
       if(markdown.length > 6
         && markdown.slice(0, 3) === "**\n" 
@@ -203,20 +201,20 @@ async function main() {
         color: ${enableColor};
       }`);
       mainContentContainer.addEventListener("paste", pasteHandler)
-      logseq.UI.showMsg("Enable paste more plugin", "success");
+      logseq.UI.showMsg("Enable paste typora enhanced plugin", "success");
     } else {
       logseq.provideStyle(css`
       .${triggerIconName}:before {
         color: ${disableColor};
       }`);
       mainContentContainer.removeEventListener("paste", pasteHandler)
-      logseq.UI.showMsg("Disable paste more plugin", "success");
+      logseq.UI.showMsg("Disable paste typora enhanced plugin", "success");
     }
   }
 
   logseq.App.registerCommandPalette({
     key: `paste-keyboard-shortcut`,
-    label: "enable/disable paste more",
+    label: "enable/disable paste typora enhanced",
     // keybinding: {
     //   binding: logseq.settings.KeyboardShortcut_paste,
     //   mode: "global",

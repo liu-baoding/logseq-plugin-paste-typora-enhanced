@@ -1,4 +1,13 @@
-# logseq-plugin-paste-more
+# logseq-plugin-paste-typora-enhanced
+
+优化了从外部源粘贴内容到 Logseq 的体验。在此版本中进行了以下增强：
+1.  **数学公式修复**：支持识别并正确转换行内公式（`$...$`）和块级公式（适配 Typora 等编辑器的导出格式）。
+2.  **智能分块优化**：改进了区块拆分逻辑，确保公式块（`$$...$$`）作为一个整体粘贴，不会被错误地切断为多行。
+3.  **新增配置项**：增加了“自动删除分割线”功能，可根据需要在粘贴时自动剔除 Markdown 分割线（`---`）。
+
+---
+
+# logseq-plugin-paste-more (Original)
 Retain formatting when pasting from external sources.
 
 You can still use `mod+shift+v` to paste plain text.
